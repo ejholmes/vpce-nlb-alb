@@ -12,11 +12,15 @@ As a result, clients fail to open connections, and throughput/performance is deg
 
 **With VPCe**
 
+Degraded performance. Clients receive challenge ACK's back from VPCe, and send a RST.
+
 ![](./results/with-vpce.png)
 
 ![](./results/challenge-ack.png)
 
 **Without VPCe**
+
+No performance degradations. No client RST's.
 
 ![](./results/without-vpce.png)
 
