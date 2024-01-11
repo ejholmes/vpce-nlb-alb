@@ -10,11 +10,6 @@ resource "aws_lb" "nlb" {
   name_prefix = "${local.prefix}-nlb"
   internal    = true
   subnets     = var.public_subnets
-
-  access_logs {
-    bucket  = var.access_logs_bucket
-    enabled = true
-  }
 }
 
 resource "aws_security_group" "load_balancer" {
@@ -54,11 +49,6 @@ resource "aws_alb" "public" {
   drop_invalid_header_fields = true
 
   security_groups = [aws_security_group.load_balancer.id]
-
-  access_logs {
-    bucket  = var.access_logs_bucket
-    enabled = true
-  }
 }
 
 resource "aws_alb_listener" "http" {

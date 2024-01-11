@@ -18,16 +18,6 @@ module "client_vpc" {
 
   enable_nat_gateway = true
   enable_vpn_gateway = false
-
-  enable_flow_log = true
-  flow_log_destination_type = "s3"
-  flow_log_destination_arn = aws_s3_bucket.flow_logs.arn
-  flow_log_traffic_type = "ALL"
-  flow_log_log_format                 = "$${version} $${account-id} $${interface-id} $${srcaddr} $${dstaddr} $${srcport} $${dstport} $${protocol} $${packets} $${bytes} $${start} $${end} $${action} $${log-status} $${vpc-id} $${subnet-id} $${instance-id} $${tcp-flags} $${pkt-srcaddr} $${pkt-dstaddr} $${az-id} $${pkt-src-aws-service} $${pkt-dst-aws-service} $${flow-direction} $${traffic-path}"
-  flow_log_file_format                = "parquet"
-  flow_log_hive_compatible_partitions = true
-  flow_log_per_hour_partition         = true
-  flow_log_max_aggregation_interval   = 60
 }
 
 module "provider_vpc" {
@@ -42,16 +32,6 @@ module "provider_vpc" {
 
   enable_nat_gateway = true
   enable_vpn_gateway = false
-
-  enable_flow_log = true
-  flow_log_destination_type = "s3"
-  flow_log_destination_arn = aws_s3_bucket.flow_logs.arn
-  flow_log_traffic_type = "ALL"
-  flow_log_log_format                 = "$${version} $${account-id} $${interface-id} $${srcaddr} $${dstaddr} $${srcport} $${dstport} $${protocol} $${packets} $${bytes} $${start} $${end} $${action} $${log-status} $${vpc-id} $${subnet-id} $${instance-id} $${tcp-flags} $${pkt-srcaddr} $${pkt-dstaddr} $${az-id} $${pkt-src-aws-service} $${pkt-dst-aws-service} $${flow-direction} $${traffic-path}"
-  flow_log_file_format                = "parquet"
-  flow_log_hive_compatible_partitions = true
-  flow_log_per_hour_partition         = true
-  flow_log_max_aggregation_interval   = 60
 }
 
 # Provision an NLB/ALB pair in the provider VPC. This one will receive traffic
@@ -64,7 +44,6 @@ module "with_vpce" {
   vpc_id = module.provider_vpc.vpc_id
   public_subnets = module.provider_vpc.public_subnets
   cidr_blocks = [module.provider_vpc.vpc_cidr_block]
-  access_logs_bucket = aws_s3_bucket.access_logs.bucket
 }
 
 # Provision an NLB/ALB pair in the provider VPC. This one will receive traffic
@@ -77,7 +56,6 @@ module "without_vpce" {
   vpc_id = module.provider_vpc.vpc_id
   public_subnets = module.provider_vpc.public_subnets
   cidr_blocks = [module.provider_vpc.vpc_cidr_block]
-  access_logs_bucket = aws_s3_bucket.access_logs.bucket
 }
 
 resource "aws_security_group" "vpce" {
