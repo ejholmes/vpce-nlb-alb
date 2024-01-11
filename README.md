@@ -1,6 +1,6 @@
 This attempts to demonstrate an issue one might encounter when traffic is sent to an ALB, through a VPC endpoint/NLB in AWS. When a VPC endpoint is introduced, clients might discover that TCP connections occasionally fail to open.
 
-This spins up two test cases; one sending traffic to an ALB via a VPC endpoint/NLB, and the other sending traffic to the ALB through an ALB directly. Each case sendings 1000 requests per second from 4 EC2 instances (4000 rps total).
+This spins up two test cases; one sending traffic to an ALB via a VPC endpoint/NLB, and the other sending traffic to the ALB through an NLB directly (no VPCe). Each case sendings 1000 requests per second from 4 EC2 instances (4000 rps total).
 
 ![](./vpce-nlb-alb.png)
 
